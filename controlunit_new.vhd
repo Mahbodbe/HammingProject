@@ -76,6 +76,7 @@ ARCHITECTURE Behavioral OF controlunit IS
 
     SIGNAL current_index : unsigned(1 TO 8) := (OTHERS => '0');
     SIGNAL temp_addr : STD_LOGIC_VECTOR(1 TO 8) := (OTHERS => '0');
+    SIGNAL temp_addr_2 : STD_LOGIC_VECTOR(1 TO 8) := (OTHERS => '0');
 
     SIGNAL alu_res : STD_LOGIC_VECTOR(1 TO 8) := (OTHERS => '0');
     CONSTANT Read_function_r : STD_LOGIC_VECTOR(1 TO 8) := "11001111";
@@ -297,10 +298,10 @@ BEGIN
 
                 WHEN ARRAY_ALU_WAIT =>
                     alu_res <= data_alu;
-                    temp_addr <= STD_LOGIC_VECTOR(unsigned(dest_addr) + current_index);
+                    temp_addr_2 <= STD_LOGIC_VECTOR(unsigned(dest_addr) + current_index);
                     state <= ARRAY_WRITE;
                 WHEN ARRAY_WRITE =>
-                    ram_write_add <= temp_addr;
+                    ram_write_add <= temp_addr_2;
                     ram_write_data <= data_alu;
                     write_en <= '1';
                     state <= ARRAY_HOLD;
